@@ -2,7 +2,7 @@
 
 ## Version 1.0 — 2026-11-14
 
-Installed-runtime validation: **149 tests passed** on Windows with Python 3.12.14.
+Installed-runtime validation initially passed **149 tests** on Windows with Python 3.12.14.
 Command: `.venv/Scripts/python.exe -B -m pytest --basetemp=work/pytest-release-installed-final -q`.
 The skill-creator validator also returned **Skill is valid!**.
 
@@ -31,6 +31,12 @@ confirmed synthetic outcome above its user-selected target.
 Release CI is verified separately after upload. Live ChatGPT installation/behavior,
 live provider-write acceptance, multi-user identity and tamper-proof auditing are not
 claimed. This release has no automatic scheduler or public distribution authorization.
+
+The first v1 CI run found a packaging checksum defect: text line endings changed
+between Windows preparation and GitHub/Linux checkout. 148 other tests passed on
+the failing runner. Fixed the builder to normalize text before hashing, added LF
+repository attributes and a Windows-versus-Unix reproducibility regression. The
+corrected suite contains 150 tests; final matrix results follow the fix commit.
 
 ## Historical Phase 1 verification — 2026-11-14
 

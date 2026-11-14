@@ -10,6 +10,9 @@ optionally creates a deterministic ZIP. The committed `plugins/soloos` folder is
 generated distribution copy. Rebuild it through an inspected staging directory when
 the runtime changes; never edit its copies independently.
 
+Text assets are normalized to LF before hashing and packaging. `.gitattributes`
+preserves LF in repository checkouts so checksum verification works on Windows/Linux.
+
 `agent-plugin.schema.json` was retrieved without modification on 2026-11-14 from
 https://agent-plugins.org/schemas/1.0.0/plugin.schema.json for offline validation.
 It is a third-party specification resource, not original SoloOS source; retain its

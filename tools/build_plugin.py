@@ -25,7 +25,11 @@ def build(output, skill=None, archive=None):
     for file in sorted(skill.rglob('*')):
         if '__pycache__' in file.parts or file.suffix == '.pyc': continue
         if file.is_symlink(): raise ValueError('Plugin input must not contain symlinks')
-        if file.is_file(): entries['skills/soloos/'+file.relative_to(skill).as_posix()] = file.read_bytes()
+        if file.is_file():
+            content=file.read_bytes()
+            if file.suffix in ('.md','.py','.json','.yaml','.yml','.txt'):
+                content=content.decode('utf-8').replace('\r\n','\n').replace('\r','\n').encode('utf-8')
+            entries['skills/soloos/'+file.relative_to(skill).as_posix()] = content
     entries['SHA256SUMS.json'] = (json.dumps({p: hashlib.sha256(b).hexdigest() for p,b in entries.items()},indent=2)+'\n').encode()
     output.mkdir(parents=True)
     for name, content in entries.items():

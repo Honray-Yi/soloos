@@ -50,6 +50,15 @@ def test_committed_distribution_matches_runtime():
     runtime_files={p.relative_to(SKILL).as_posix():p.read_bytes() for p in SKILL.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc'}
     packaged=package/'skills/soloos'
     package_files={p.relative_to(packaged).as_posix():p.read_bytes() for p in packaged.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc'}
-    assert runtime_files==package_files
+    normalize=lambda files: {path:content.replace(b'\r\n',b'\n').replace(b'\r',b'\n') for path,content in files.items()}
+    assert normalize(runtime_files)==normalize(package_files)
     hashes=json.loads((package/'SHA256SUMS.json').read_text())
     assert all(hashlib.sha256((package/path).read_bytes()).hexdigest()==digest for path,digest in hashes.items())
+
+
+def test_packaging_normalizes_windows_and_unix_line_endings(tmp_path):
+    for name,newline in [('windows',b'\r\n'),('unix',b'\n')]:
+        skill=tmp_path/name/'soloos'; skill.mkdir(parents=True)
+        (skill/'SKILL.md').write_bytes(newline.join([b'---',b'name: soloos',b'description: Test',b'---',b'Instructions',b'']))
+        builder.build(tmp_path/(name+'-package'),skill,tmp_path/(name+'.zip'))
+    assert (tmp_path/'windows.zip').read_bytes()==(tmp_path/'unix.zip').read_bytes()
