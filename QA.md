@@ -44,8 +44,11 @@ instructions and the official skill conventions. No independent LLM behavioral t
 or live ChatGPT installation test was performed. Tests establish the Python runtime's
 behavior, not that every model or host will always follow instructions.
 
-GitHub Actions is configured for Windows/Linux and Python 3.11–3.13, but has not run
-remotely; only the local environment above is verified. There is no public release,
+GitHub Actions completed successfully on Windows/Linux and Python 3.11–3.13:
+all six matrix jobs passed for commit `4159d30cada363f60d48dd95795aba9f8d4e5c3f`.
+Evidence: https://github.com/Honray-Yi/soloos/actions/runs/43577214920
+The private repository contains the 47 prepared source, test and documentation files.
+No open-source license was added, per owner preference. There is no public release,
 plugin package, execution connector, scheduler or SQLite adapter in Phase 1.
 Structural validation does not prove business facts; source reconciliation remains
 necessary. No claim of production certification or flawless behavior is made.

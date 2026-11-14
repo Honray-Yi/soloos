@@ -1,5 +1,7 @@
 # SoloOS — Solo Founder Operating System
 
+[![SoloOS tests](https://github.com/Honray-Yi/soloos/actions/workflows/tests.yml/badge.svg)](https://github.com/Honray-Yi/soloos/actions/workflows/tests.yml)
+
 **One Founder. One Company. One Intelligent Operating System.**
 
 Phase 1 local preview: turn validated business records into cash-basis KPIs, a weekly
@@ -77,8 +79,10 @@ Development stops for user approval before Phase 2. No autonomous self-modificat
 
 Verified locally: **90 tests passed**, valid skill metadata, and standalone copied-skill
 execution. Inspect the generated [weekly report](examples/weekly-report.md) and
-[marketing proposal](examples/marketing-decision.json). The GitHub Actions matrix is
-configured but has not run remotely. See QA.md for the exact verification environment.
+[marketing proposal](examples/marketing-decision.json). All six GitHub Actions jobs
+passed on Windows/Linux with Python 3.11–3.13 for the initial Phase 1 upload.
+See [the verified run](https://github.com/Honray-Yi/soloos/actions/runs/43577214920)
+and QA.md for verification details. Live ChatGPT acceptance remains untested.
 
 ## Contributions, security and licensing
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a change and
