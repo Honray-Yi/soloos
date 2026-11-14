@@ -1,0 +1,6 @@
+interface:
+  display_name: "SoloOS"
+  short_description: "Evidence-based management for solo founders"
+  default_prompt: "Use $soloos to review my weekly performance and propose the next business decision."
+policy:
+  allow_implicit_invocation: true

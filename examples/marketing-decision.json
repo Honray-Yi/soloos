@@ -1,0 +1,67 @@
+{
+  "schema_version": "0.1",
+  "id": "decision-649c0140bc65bd865c7cf1f70e626a352ad4d831d1b3e54e35a62667b0144aa7",
+  "record_type": "Decision",
+  "company_id": "demo-solo",
+  "synthetic": true,
+  "metadata": {
+    "source": "soloos/0.1.0",
+    "recorded_at": "2026-11-14T08:33:35.435900+00:00",
+    "currency": "MYR",
+    "timezone": "Asia/Kuala_Lumpur",
+    "validation_status": "validated",
+    "evidence": "forecast",
+    "provenance": [
+      "dataset:sha256:576c121063f3578e989fa801e8db1d89de2bfa2da11e6f978817c5f4fd8afd09"
+    ]
+  },
+  "payload": {
+    "status": "proposed",
+    "intent": "marketing-budget",
+    "period": {
+      "start": "2026-11-02",
+      "end": "2026-11-08"
+    },
+    "scenario": {
+      "monthly_increment": "600.00",
+      "currency": "MYR",
+      "contribution_margin_assumption": "0.60",
+      "required_incremental_monthly_revenue": "1000.00",
+      "baseline_runway_months": "4.00",
+      "stressed_runway_months": "3.33",
+      "stressed_monthly_operating_burn": "3600.00",
+      "assumptions": [
+        "Increase is recurring monthly spend, not a one-time payment.",
+        "Downside scenario assumes no incremental revenue and unchanged baseline operations.",
+        "Contribution margin, when supplied, is an unverified assumption, not measured campaign ROI."
+      ]
+    },
+    "perspectives": {
+      "CEO": "Check strategic fit, founder delivery capacity and opportunity cost; preserve an explicit cash reserve.",
+      "CFO": "Compare downside cash burn and break-even revenue; account for upcoming obligations before approval.",
+      "CMO": "Require channel-level acquisition cost, conversion, attribution and payback evidence; test before scaling."
+    },
+    "recommendation": "Consider only a capped experiment after validating acquisition economics, cash obligations and founder capacity.",
+    "next_action": {
+      "owner": "founder",
+      "action": "Collect channel economics and set an affordable experiment cap before seeking approval.",
+      "review_date": "2026-11-15",
+      "success_criterion": "Observed incremental contribution covers incremental spend within the founder-approved payback window."
+    },
+    "missing_evidence": [
+      "Channel-level conversion and acquisition costs",
+      "Payback window and upcoming cash obligations",
+      "Founder capacity"
+    ],
+    "warnings": [
+      "Runway extrapolates this period to a 30-day month; financing, future obligations and seasonality are not projected."
+    ],
+    "policy": {
+      "allowed": false,
+      "status": "proposal_only",
+      "reason": "External execution is unavailable in Phase 1; approval cannot enable an absent connector.",
+      "required_approval": "explicit_external_write",
+      "approval_verified": false
+    }
+  }
+}
