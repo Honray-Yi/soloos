@@ -5,7 +5,9 @@ Phases 2–5 were authorized by the user and implemented. The local skill, gener
 plugin, private marketplace and ZIP are ready. 149 installed-runtime tests pass;
 Codex recognizes the plugin as available. See ROADMAP.md and QA.md for delivered
 scope and external acceptance tests not performed. The remaining handoff step is
-the private GitHub update and release CI verification.
+the private GitHub update and release CI verification. Those release checks subsequently
+passed on 2026-11-15; see QA.md. The user's added request for a prompt-only edition and
+clear repository navigation is implemented separately without changing runtime authority.
 
 Earlier Phase 1 stop instructions below are historical milestones, superseded by
 the user's authorization to complete the project.

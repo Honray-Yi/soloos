@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-15 — Portable release verified; prompt-only edition
+- Corrected Windows/Linux line-ending normalization before package hashing; added a
+  regression and LF repository attributes. All 150 tests and six CI jobs passed.
+- Added an independent Chinese prompt-only edition with eight editable role guides,
+  shared principles, personalization, workflows, hand-offs and decision records.
+- Added repository and example navigation; local documentation-link and artifact
+  checks now run in CI. Prompt content was reviewed, not certified across all models.
+
 ## 1.0.0 — 2026-11-14 — Complete local management release
 - Added eight department findings, six business KPI templates and safe custom formulas.
 - Added all operational entity schemas, relationship checks and period measurements.

@@ -12,6 +12,10 @@
 The owner authorized completion after reviewing Phase 1. Local implementation and
 distribution preparation are complete; final CI evidence is recorded in QA.md.
 
+On 2026-11-15, the corrected v1 package passed all six CI jobs. The requested independent
+prompt-only edition and repository navigation are included; prompt behavior across
+different AI hosts remains unverified rather than assumed.
+
 ## Explicit release limits
 - Live ChatGPT installation/behavior acceptance has not been performed.
 - No live business write was performed to validate the connector.

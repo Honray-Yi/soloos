@@ -4,6 +4,13 @@
 
 **One Founder. One Company. One Intelligent Operating System.**
 
+**只想复制提示词、不安装程序？** 使用 [SoloOS 简易版](prompt-edition/README.md)：
+八个角色守则、协作流程和可编辑的个性化设置。完整项目的文件用途见
+[仓库导航 / Repository map](REPOSITORY_MAP.md)。
+
+For a no-code, copy-and-paste workflow, use the separate [prompt-only edition](prompt-edition/README.md).
+It provides editable role prompts; it does not inherit the runtime's programmatic validation or execution controls.
+
 SoloOS 1.0 is a local-first management skill for solo founders. It combines validated
 business data, deterministic calculations, management reporting and explicitly
 authorized operations. No mandatory paid API, server or hosted database.
@@ -98,6 +105,7 @@ and concurrent operations, HTTP contracts, and extracted-package execution.
 ## Repository structure
 ```text
 .agents/skills/soloos/   Canonical standalone runtime
+prompt-edition/         Standalone, editable text prompts (Chinese default)
 .agents/plugins/        Local marketplace catalog
 plugins/soloos/         Generated portable plugin
 packaging/              Manifest, catalog and official schema sources
@@ -108,6 +116,12 @@ tools/                  Development and packaging helpers
 
 See [PRD](PRD.md), [architecture](ARCHITECTURE.md), [roadmap](ROADMAP.md),
 [contributing](CONTRIBUTING.md), [security](SECURITY.md) and [changelog](CHANGELOG.md).
+
+Release verification: **150 automated tests passed locally**, and all six Windows/Linux
+and Python 3.11–3.13 jobs passed for the corrected v1 package.
+[Verified CI run](https://github.com/Honray-Yi/soloos/actions/runs/43614128409).
+Documentation link checks also run in CI; prompt quality review is not a claim of
+behavioral testing on every AI model.
 
 This repository remains **private with no open-source license**. No redistribution
 or sublicensing permission is granted by this README. Dependencies and the attributed

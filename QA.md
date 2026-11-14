@@ -1,5 +1,26 @@
 # SoloOS release verification
 
+## Release closure and prompt edition — 2026-11-15
+
+The corrected v1 release passed **150 local tests**. All six Windows/Linux and
+Python 3.11–3.13 CI jobs succeeded for commit
+`5ea1144e0495a36f040f5a53a53e71066ad17313`:
+https://github.com/Honray-Yi/soloos/actions/runs/43614128409
+This confirms the line-ending/checksum defect was corrected across the matrix.
+
+The separate `prompt-edition/` contains text-only startup instructions, shared
+principles, a company profile, editable personalization settings, eight role files,
+three workflows, two record/hand-off templates and one fictional quick-start case.
+Content review checked role-specific responsibilities, shared evidence, conflict
+handling, customization boundaries, and honest limits around tools, memory and
+execution. No live cross-model behavioral evaluation is claimed for these prompts.
+
+Repository organization is documented in REPOSITORY_MAP.md and examples/README.md.
+`tools/check_repository.py` checks distributable paths and local Markdown link targets;
+it does not validate external links, every Markdown anchor or model behavior. CI now
+runs that check after the software tests. Generated plugin/runtime equality remains
+covered by the packaging suite; local environments, journals and build ZIPs stay ignored.
+
 ## Version 1.0 — 2026-11-14
 
 Installed-runtime validation initially passed **149 tests** on Windows with Python 3.12.14.
