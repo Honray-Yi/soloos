@@ -13,7 +13,7 @@ def initialize(name, business_type, currency, timezone, minor_units, start, end)
         "evidence": "assumption", "provenance": ["Founder must confirm profile and import records"],
     }
     return validate({
-        "schema_version": "0.1",
+        "schema_version": "1.0",
         "company": {"id": "company-1", "name": name, "business_type": business_type,
                     "minor_units": minor_units, "synthetic": False, "metadata": deepcopy(metadata)},
         "coverage": {"start": start, "end": end, "complete": False, "metadata": deepcopy(metadata)},

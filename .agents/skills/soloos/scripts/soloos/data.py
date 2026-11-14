@@ -45,7 +45,7 @@ def validate(data):
         raise ValueError(f"Schema error at {'/'.join(map(str, error.path)) or '/'}: {error.message}")
     company = data["company"]
     meta = company["metadata"]
-    records = [company, data["coverage"], *data["transactions"]]
+    records = [company, data["coverage"], *data["transactions"], *data.get('entities', []), *data.get('measurements', [])]
     if "cash_snapshot" in data:
         records.append(data["cash_snapshot"])
     for record in records:
@@ -59,6 +59,10 @@ def validate(data):
         amount = record.get("amount", record.get("available_cash"))
         if amount is not None and -Decimal(amount).as_tuple().exponent > company["minor_units"]:
             raise ValueError("Money precision exceeds company minor_units")
+        for field in ('price', 'unit_cost', 'budget', 'value'):
+            if field in record and (record.get('record_type') != 'Measurement' or record.get('unit') == 'money'):
+                if -Decimal(record[field]).as_tuple().exponent > company['minor_units']:
+                    raise ValueError('Money precision exceeds company minor_units')
     coverage = data["coverage"]
     if date.fromisoformat(coverage["start"]) > date.fromisoformat(coverage["end"]):
         raise ValueError("Coverage start must not exceed end")
@@ -69,6 +73,34 @@ def validate(data):
         ids.add(transaction["id"])
         if transaction["company_id"] != company["id"]:
             raise ValueError("Transaction belongs to a different company")
+    entity_ids = {r['id']: r['record_type'] for r in data.get('entities', [])}
+    measurement_keys = set()
+    for row in [*data.get('entities', []), *data.get('measurements', [])]:
+        if row['id'] in ids:
+            raise ValueError('Duplicate record ID: ' + row['id'])
+        ids.add(row['id'])
+        if row['company_id'] != company['id']:
+            raise ValueError('Record belongs to a different company')
+        for field, kind in [('goal_id', 'Goal'), ('project_id', 'Project'), ('product_id', 'Product')]:
+            if field in row and entity_ids.get(row[field]) != kind:
+                raise ValueError('Missing or wrong-type reference: ' + field)
+        if row['record_type'] == 'Measurement':
+            if row['start'] > row['end']:
+                raise ValueError('Measurement start must not exceed end')
+            key = (row['metric'], row['start'], row['end'])
+            if key in measurement_keys:
+                raise ValueError('Duplicate measurement for metric and period')
+            measurement_keys.add(key)
+            if row['metric'] in ('revenue', 'expenses', 'profit'):
+                raise ValueError('Measurement cannot replace a reserved financial KPI')
+            value = Decimal(row['value'])
+            if row['unit'] in ('count', 'hours') and value < 0:
+                raise ValueError('Counts and hours must be nonnegative')
+            if row['unit'] == 'count' and value != value.to_integral_value():
+                raise ValueError('Counts must be integral')
+    custom_names = [r['name'] for r in data.get('custom_kpis', [])]
+    if len(set(custom_names)) != len(custom_names):
+        raise ValueError('Duplicate custom KPI name')
     return data
 
 

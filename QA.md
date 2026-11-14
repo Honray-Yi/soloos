@@ -1,4 +1,38 @@
-# Phase 1 verification — 2026-11-14
+# SoloOS release verification
+
+## Version 1.0 — 2026-11-14
+
+Installed-runtime validation: **149 tests passed** on Windows with Python 3.12.14.
+Command: `.venv/Scripts/python.exe -B -m pytest --basetemp=work/pytest-release-installed-final -q`.
+The skill-creator validator also returned **Skill is valid!**.
+
+Added coverage includes all six business templates, eight distinct department findings,
+custom-formula rejection of code execution, entity references, report calendar/leap-year
+boundaries, incomplete periods, cash scenarios, immutable SQLite snapshots, tampering
+detection and decision outcomes. All original Phase 1 regressions continue to pass.
+
+Execution tests cover default dry-run without side effects, missing/mismatched/expired
+approvals, separate high-risk approval, changed targets and content, missing credentials,
+unsupported operation types, HTTP contracts and redirect refusal. Duplicate and
+concurrent requests are suppressed; uncertain outcomes block automatic retries and
+do not log raw exception secrets. No real business issue was created for testing.
+
+Package validation uses the official Agent Plugins 1.0 schema. Tests verify generated
+package/runtime equality, checksums, deterministic ZIPs and extracted CLI execution.
+`codex plugin marketplace add . --json` registered the local private source;
+`codex plugin list --marketplace soloos-private --available --json` returned
+`soloos@soloos-private`, version 1.0.0, available and not automatically enabled.
+
+End-to-end v1 examples include a consulting dataset, eight-department review, weekly
+executive report, cash scenario and decision outcome. The example exposes blocked
+delivery and qualified pipeline together, 60% project margin, 60% utilization and a
+confirmed synthetic outcome above its user-selected target.
+
+Release CI is verified separately after upload. Live ChatGPT installation/behavior,
+live provider-write acceptance, multi-user identity and tamper-proof auditing are not
+claimed. This release has no automatic scheduler or public distribution authorization.
+
+## Historical Phase 1 verification — 2026-11-14
 
 ## Tested locally
 Environment: Windows, CPython 3.12.14, pytest 9.2.0, jsonschema 4.26.0,

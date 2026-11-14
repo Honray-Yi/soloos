@@ -1,0 +1,30 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "soloos",
+  "version": "1.0.0",
+  "description": "Solo founder business intelligence, management reporting and explicitly authorized operations.",
+  "author": {
+    "name": "Honray-Yi"
+  },
+  "repository": "https://github.com/Honray-Yi/soloos",
+  "keywords": [
+    "solo-founder",
+    "business-management",
+    "reporting",
+    "agent-skill"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "SoloOS",
+        "shortDescription": "Business management for solo founders",
+        "longDescription": "Local-first analysis, evidence-aware reports, decision tracking and scoped approval workflows. Python runtime is optional for advisory use; no server or paid API is required.",
+        "developerName": "Honray-Yi",
+        "category": "Productivity",
+        "defaultPrompt": [
+          "Use SoloOS to review my business performance and propose the next decision."
+        ]
+      }
+    }
+  }
+}

@@ -21,7 +21,8 @@ Paths above are illustrative: use actual platform paths. For a real profile use
 --start YYYY-MM-DD --end YYYY-MM-DD --out PATH`. It starts with unconfirmed metadata,
 incomplete coverage, no cash snapshot and no transactions. Import and verify records;
 do not mark evidence confirmed merely because it passes structural validation.
-There is no overwrite flag and no execute command. Output defaults to stdout except init.
+There is no overwrite flag. Output defaults to stdout except init. External execution
+is a separate default-dry-run workflow documented in operations.md.
 
 ## ChatGPT and constrained environments
 
@@ -31,4 +32,11 @@ dataset or exported CLI results and provide an advisory review. Label manual ari
 as unverified, do not claim schema validation or tests ran, and explain how to reproduce
 the result locally. If files cannot be saved, return the proposed content for the user
 to save. Chat history is not storage. No persistence, connector or scheduling capability
-is implied by loading this skill. Live ChatGPT installation is not tested in Phase 1.
+is implied by loading this skill. Live ChatGPT installation is not established by
+passing local Python tests; see the repository's compatibility matrix.
+
+## Extended commands
+Use `--help` on a command for exact arguments: `departments`, `template`,
+`business-kpis`, `review`, `report`, `forecast`, `outcome`, `store-put`, `store-get`,
+`history`, `action-propose`, `action-approve`, `action-execute`, and `audit`.
+Inspect the relevant reference before running a state-changing local command.

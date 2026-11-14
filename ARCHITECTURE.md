@@ -1,64 +1,85 @@
-# SoloOS architecture
+# SoloOS 1.0 architecture
 
-## Boundaries
-The development repository contains tests, quality tooling and product documentation.
-The portable runtime is `.agents/skills/soloos/`, containing SKILL.md, metadata,
-references, Python modules and schema/sample assets. It imports nothing from the
-repository root and uses no API or database. `work/` is disposable local development
-staging/output; it is ignored by Git and is not the distribution source.
+## Boundaries and flow
+The canonical runtime is `.agents/skills/soloos`. Tests, development tooling, repository
+documentation and packaging sources remain outside it. The generated plugin contains
+an identical runtime under `skills/soloos`; checksums and a regression test detect drift.
 
-Flow: host capability check -> intent routing -> validated local JSON -> deterministic
-financial functions -> Report/Decision record -> optional user-requested local export.
-Natural-language interpretation belongs to the host model; exact-label CLI routing
-does not pretend to be an NLP engine. Business data never grants tool authorization.
+Host capability detection -> intent selection -> validated records -> deterministic
+metrics -> department judgment/report/proposal -> optional user-requested persistence.
+External execution is a separate explicitly opted-in path requiring approvals and a
+capable connector. The model never computes authoritative financial totals in place of
+the runtime or infers tool capability from the host name.
 
-## Modules
-- `data`: Draft 2020-12 validation, semantic checks, fingerprints, exclusive file writes.
-- `onboarding`: empty profile or fixed synthetic fixture.
-- `finance`: Decimal cash-basis totals and conditional runway.
-- `reporting`: seven-day report, explicit completeness and Markdown rendering.
-- `decisions`: bounded monthly-spend scenario and CEO/CFO/CMO prompts.
-- `records`: schema-validated output envelope and evidence lineage.
-- `permissions`: fail-closed execution stub; always denies, including with approval.
-- `routing`, `cli`: explicit command surface and capability disclosure.
+## Data model
+Draft 2020-12 schemas accept existing 0.1 datasets and additive 1.0 fields. No automatic
+destructive migration occurs. Company and Transaction retain their original shape;
+operational records are typed members of `entities`. Measurements are optional
+period observations. The same source, timestamp, currency, timezone, validation status,
+evidence and provenance contract applies across business records.
 
-## Unified model and staged coverage
-All records share identity, company linkage and metadata: source, timestamp, currency,
-timezone, validation status, evidence class and provenance. Company establishes reporting
-settings. Decimal strings avoid binary floating-point loss. `minor_units` must be
-verified by the importer; currency codes are syntactically validated, not an ISO registry.
+| Record | Implemented relationship |
+| --- | --- |
+| Company | Reporting currency, minor units, timezone, business model |
+| Goal | Metric, target, direction and due date |
+| Project | Company and Goal reference |
+| Task | Project reference, owner, status and due date |
+| Transaction | Company, settled cash kind, amount and timestamp |
+| Customer | Company, pipeline stage and observed value |
+| Product | Company, status, price and unit cost |
+| Campaign | Product reference, channel, budget and status |
+| Decision | Proposed management decision and input dataset lineage |
+| Report | Period, KPIs, department findings and priorities |
 
-| Record | Phase 1 | Intended later relationships |
-| --- | --- | --- |
-| Company | Validated profile | Parent of all records |
-| Transaction | Validated settled cash movements | Customer/Product/Campaign attribution |
-| Report | Generated weekly record | Period and input snapshot lineage |
-| Decision | Generated proposal | Goal, actions and measured outcome |
-| Goal | Planned | Company objective, target and measurement window |
-| Project | Planned | Company/Goal, owner, status |
-| Task | Planned | Project, owner, due date |
-| Customer | Planned | Company, source identity and consent scope |
-| Product | Planned | Company, price and delivery economics |
-| Campaign | Planned | Product, channel, spend and attribution |
+Forecast and Outcome are additional generated envelopes. Action proposals have a
+separate strict schema, content fingerprint and idempotency key. Their nonmonetary
+GitHub operation uses currency XXX (not applicable). Schema checks do not authenticate
+business facts. The caller must reconcile source evidence and currency definitions.
 
-Coverage and cash snapshot are auxiliary records with the same evidence metadata.
-Schema validation is not evidence authentication. Reconciliation remains a founder task.
-Output payload validation checks required Phase 1 structure; it is not a generic
-business object store. Future schema versions require explicit migrations.
+## Deterministic modules
+- `data`: structural/semantic validation, duplicate keys/IDs, reference integrity.
+- `finance`: Decimal cash-basis arithmetic, refund treatment and conditional runway.
+- `catalog/kpis`: six model templates and bounded AST arithmetic without eval.
+- `management/routing`: eight distinct department findings and exact-label routing;
+  host reasoning handles natural-language intent.
+- `periods/reporting`: five full calendar cadences plus legacy seven-day reports.
+- `forecast`: explicit compounded 30-day scenarios; never a statistical prediction.
+- `records/outcomes`: provenance envelopes and observation-versus-target evaluation.
+- `storage`: optional SQLite immutable snapshots and decision history.
 
-## Safety and persistence
-The CLI has no network or external-write adapter and no execute command. The Python
-execution boundary always raises PermissionError. Approvals are not implemented as
-trusted credentials. Future connectors must independently verify scoped authorization,
-separate high-risk approvals, use idempotency keys and append durable execution audits.
-Content hashes only identify local proposals; they are not security signatures.
+Counts, hours, currency precision and reporting periods are validated. Unverified or
+missing inputs cannot be silently presented as actuals. Custom output units remain
+user declarations; dimensional meaning and causal attribution are not automatically
+proven. Entity lists are current snapshots, not a historical events warehouse.
 
-JSON files are durable only when saved. The caller chooses storage and backups. SQLite
-is an optional future adapter behind these records, not an MVP dependency. Do not use
-conversation history as a record database. No secrets belong in fixtures or source.
+## Authorized operations
+`actions` manages action validation, approval expiry, consumption, SQLite journal
+state and auditing. `connectors` contains one optional actual GitHub REST adapter.
+`action_commands` separates proposal, human approval and execution.
 
-## Tradeoffs and limits
-Phase 1 deliberately uses cash-basis management figures and a constant-rate runway
-scenario. No accrual accounting, FX conversion, bank reconciliation or market-response
-forecast is implied. Local Python behavior is automated-tested; model compliance and
-ChatGPT installation need separate host evaluations before distribution claims.
+Every issue is conservatively high risk, even if private. Two separately recorded
+approvals bind the full action digest. Approval issuance requires an interactive
+terminal and exact confirmation; the agent must not type it on the founder's behalf.
+Credentials are read only from SOLOOS_GITHUB_TOKEN. Read-only/dry-run is the default.
+Other operation kinds remain unimplemented proposals.
+
+The journal reserves a unique key in a transaction before any HTTP request. Success
+returns a provider ID; repeat attempts return the saved result. Uncertain/in-flight
+attempts block retries. GitHub has no guaranteed exactly-once issue creation in this
+adapter. Human reconciliation uses the request marker and journal. Redirects are
+refused and no automatic HTTP retries occur. Raw exception messages are not logged.
+
+The local user and processes with filesystem access are inside the trust boundary.
+The journal is not encrypted, tamper-proof or a verified identity service. Actor names
+are labels; OS permissions and credential scope protect the runtime. No host-MCP-to-
+journal bridge is pretended to exist.
+
+## Distribution and host boundaries
+The plugin uses a root Agent Plugins 1.0 manifest with OpenAI UI metadata. No server,
+MCP stub or hooks are bundled. A repo-local catalog exposes it as an available plugin.
+Codex marketplace discovery has been verified. Advisory instructions work without
+Python, but deterministic execution requires the dependencies and file capabilities.
+Live ChatGPT install/behavior tests remain distinct from package and CLI tests.
+
+No scheduler, mandatory paid API, hosted database, FX service, accrual ledger or
+automatic self-modification is part of this release.

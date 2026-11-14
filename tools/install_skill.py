@@ -7,9 +7,11 @@ development installation helper, not a plugin publisher or a permissions bypass.
 import argparse
 from pathlib import Path
 import shutil
+import os
+import tempfile
 
 
-def install(source, destination):
+def install(source, destination, baseline=None):
     source, destination = source.resolve(), destination.absolute()
     if not (source / "SKILL.md").is_file():
         raise ValueError("Source is not a skill directory")
@@ -24,22 +26,34 @@ def install(source, destination):
             if any(parent.is_symlink() for parent in [target, *target.parents]):
                 raise ValueError("Symlink destination is not accepted")
             if target.exists() and target.read_bytes() != path.read_bytes():
-                raise FileExistsError(f"Refusing to overwrite different existing content: {target}")
+                previous = Path(baseline) / path.relative_to(source) if baseline else None
+                if previous is None or not previous.is_file() or previous.read_bytes() != target.read_bytes():
+                    raise FileExistsError(f"Refusing to overwrite content that differs from the reviewed baseline: {target}")
             paths.append((path, target))
     copied = 0
     for path, target in paths:
-        if target.exists():
+        if target.exists() and target.read_bytes() == path.read_bytes():
             continue
         target.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("rb") as reader, target.open("xb") as writer:
-            shutil.copyfileobj(reader, writer)
+        if target.exists():
+            previous = Path(baseline) / path.relative_to(source)
+            if previous.read_bytes() != target.read_bytes():
+                raise FileExistsError('Destination changed after review: ' + str(target))
+            with tempfile.NamedTemporaryFile(dir=target.parent,delete=False) as writer:
+                temporary = writer.name
+                writer.write(path.read_bytes())
+            os.replace(temporary,target)
+        else:
+            with path.open("rb") as reader, target.open("xb") as writer:
+                shutil.copyfileobj(reader, writer)
         copied += 1
-    print(f"Verified {len(paths)} runtime files; installed {copied} new files into {destination}")
+    print(f"Verified {len(paths)} runtime files; installed or updated {copied} files in {destination}")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", required=True, type=Path)
     parser.add_argument("--destination", required=True, type=Path)
+    parser.add_argument("--baseline", type=Path, help="Allow updates only when existing files match this reviewed snapshot")
     args = parser.parse_args()
-    install(args.source, args.destination)
+    install(args.source, args.destination, args.baseline)

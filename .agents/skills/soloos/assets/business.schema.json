@@ -1,68 +1,679 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:soloos:business:0.1",
-  "title": "SoloOS Phase 1 business dataset",
-  "type": "object", "additionalProperties": false,
-  "required": ["schema_version", "company", "coverage", "transactions"],
+  "title": "SoloOS business dataset v1 (backward compatible with 0.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "company",
+    "coverage",
+    "transactions"
+  ],
   "properties": {
-    "schema_version": {"const": "0.1"},
-    "company": {"$ref": "#/$defs/company"},
-    "coverage": {"$ref": "#/$defs/coverage"},
-    "cash_snapshot": {"$ref": "#/$defs/cash"},
-    "transactions": {"type": "array", "items": {"$ref": "#/$defs/transaction"}}
+    "schema_version": {
+      "enum": [
+        "0.1",
+        "1.0"
+      ]
+    },
+    "company": {
+      "$ref": "#/$defs/company"
+    },
+    "coverage": {
+      "$ref": "#/$defs/coverage"
+    },
+    "cash_snapshot": {
+      "$ref": "#/$defs/cash"
+    },
+    "transactions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/transaction"
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/Goal"
+          },
+          {
+            "$ref": "#/$defs/Project"
+          },
+          {
+            "$ref": "#/$defs/Task"
+          },
+          {
+            "$ref": "#/$defs/Customer"
+          },
+          {
+            "$ref": "#/$defs/Product"
+          },
+          {
+            "$ref": "#/$defs/Campaign"
+          }
+        ]
+      }
+    },
+    "measurements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/measurement"
+      }
+    },
+    "custom_kpis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/custom_kpi"
+      }
+    }
   },
   "$defs": {
-    "money": {"type": "string", "pattern": "^(0|[1-9][0-9]{0,14})(\\.[0-9]{1,4})?$"},
-    "id": {"type": "string", "minLength": 1, "maxLength": 100},
+    "money": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]{0,14})(\\.[0-9]{1,4})?$"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
     "metadata": {
-      "type": "object", "additionalProperties": false,
-      "required": ["source", "recorded_at", "currency", "timezone", "validation_status", "evidence", "provenance"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "recorded_at",
+        "currency",
+        "timezone",
+        "validation_status",
+        "evidence",
+        "provenance"
+      ],
       "properties": {
-        "source": {"type": "string", "minLength": 1},
-        "recorded_at": {"type": "string", "format": "date-time"},
-        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
-        "timezone": {"type": "string", "minLength": 1},
-        "validation_status": {"enum": ["validated", "unverified", "rejected"]},
-        "evidence": {"enum": ["confirmed", "assumption", "estimate", "forecast"]},
-        "provenance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorded_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validation_status": {
+          "enum": [
+            "validated",
+            "unverified",
+            "rejected"
+          ]
+        },
+        "evidence": {
+          "enum": [
+            "confirmed",
+            "assumption",
+            "estimate",
+            "forecast"
+          ]
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       }
     },
     "company": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "name", "business_type", "minor_units", "synthetic", "metadata"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "business_type",
+        "minor_units",
+        "synthetic",
+        "metadata"
+      ],
       "properties": {
-        "id": {"$ref": "#/$defs/id"}, "name": {"type": "string", "minLength": 1, "maxLength": 200},
-        "business_type": {"enum": ["saas", "ecommerce", "creator", "freelance", "consulting", "digital-products", "custom"]},
-        "minor_units": {"type": "integer", "minimum": 0, "maximum": 4},
-        "synthetic": {"type": "boolean"}, "metadata": {"$ref": "#/$defs/metadata"}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "business_type": {
+          "enum": [
+            "saas",
+            "ecommerce",
+            "creator",
+            "freelance",
+            "consulting",
+            "digital-products",
+            "custom"
+          ]
+        },
+        "minor_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        }
       }
     },
     "coverage": {
-      "type": "object", "additionalProperties": false,
-      "required": ["start", "end", "complete", "metadata"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end",
+        "complete",
+        "metadata"
+      ],
       "properties": {
-        "start": {"type": "string", "format": "date"}, "end": {"type": "string", "format": "date"},
-        "complete": {"type": "boolean"}, "metadata": {"$ref": "#/$defs/metadata"}
+        "start": {
+          "type": "string",
+          "format": "date"
+        },
+        "end": {
+          "type": "string",
+          "format": "date"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        }
       }
     },
     "cash": {
-      "type": "object", "additionalProperties": false,
-      "required": ["as_of", "available_cash", "metadata"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "as_of",
+        "available_cash",
+        "metadata"
+      ],
       "properties": {
-        "as_of": {"type": "string", "format": "date"},
-        "available_cash": {"$ref": "#/$defs/money"}, "metadata": {"$ref": "#/$defs/metadata"}
+        "as_of": {
+          "type": "string",
+          "format": "date"
+        },
+        "available_cash": {
+          "$ref": "#/$defs/money"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        }
       }
     },
     "transaction": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "company_id", "occurred_at", "kind", "amount", "category", "metadata"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "company_id",
+        "occurred_at",
+        "kind",
+        "amount",
+        "category",
+        "metadata"
+      ],
       "properties": {
-        "id": {"$ref": "#/$defs/id"}, "company_id": {"$ref": "#/$defs/id"},
-        "occurred_at": {"type": "string", "format": "date-time"},
-        "kind": {"enum": ["revenue", "expense", "revenue_refund", "expense_refund", "financing_in", "financing_out"]},
-        "amount": {"$ref": "#/$defs/money"}, "category": {"type": "string", "minLength": 1},
-        "metadata": {"$ref": "#/$defs/metadata"}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "company_id": {
+          "$ref": "#/$defs/id"
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "kind": {
+          "enum": [
+            "revenue",
+            "expense",
+            "revenue_refund",
+            "expense_refund",
+            "financing_in",
+            "financing_out"
+          ]
+        },
+        "amount": {
+          "$ref": "#/$defs/money"
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        }
       }
+    },
+    "Goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_type": {
+          "const": "Goal"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metric": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]{0,14})(\\.[0-9]{1,6})?$"
+        },
+        "direction": {
+          "enum": [
+            "at_least",
+            "at_most"
+          ]
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "id",
+        "company_id",
+        "record_type",
+        "metadata",
+        "name",
+        "metric",
+        "target",
+        "direction",
+        "due_date"
+      ]
+    },
+    "Project": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_type": {
+          "const": "Project"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "active",
+            "blocked",
+            "done"
+          ]
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "company_id",
+        "record_type",
+        "metadata",
+        "name",
+        "status",
+        "goal_id"
+      ]
+    },
+    "Task": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_type": {
+          "const": "Task"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "todo",
+            "doing",
+            "blocked",
+            "done"
+          ]
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "id",
+        "company_id",
+        "record_type",
+        "metadata",
+        "name",
+        "project_id",
+        "owner",
+        "status",
+        "due_date"
+      ]
+    },
+    "Customer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_type": {
+          "const": "Customer"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "lead",
+            "qualified",
+            "won",
+            "lost",
+            "active",
+            "churned"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/money"
+        }
+      },
+      "required": [
+        "id",
+        "company_id",
+        "record_type",
+        "metadata",
+        "name",
+        "stage",
+        "value"
+      ]
+    },
+    "Product": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_type": {
+          "const": "Product"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "price": {
+          "$ref": "#/$defs/money"
+        },
+        "unit_cost": {
+          "$ref": "#/$defs/money"
+        },
+        "status": {
+          "enum": [
+            "idea",
+            "building",
+            "active",
+            "retired"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "company_id",
+        "record_type",
+        "metadata",
+        "name",
+        "price",
+        "unit_cost",
+        "status"
+      ]
+    },
+    "Campaign": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_type": {
+          "const": "Campaign"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "budget": {
+          "$ref": "#/$defs/money"
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "active",
+            "paused",
+            "complete"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "company_id",
+        "record_type",
+        "metadata",
+        "name",
+        "product_id",
+        "channel",
+        "budget",
+        "status"
+      ]
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_type": {
+          "const": "Measurement"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]{0,14})(\\.[0-9]{1,6})?$"
+        },
+        "unit": {
+          "enum": [
+            "money",
+            "count",
+            "hours",
+            "ratio",
+            "number"
+          ]
+        },
+        "start": {
+          "type": "string",
+          "format": "date"
+        },
+        "end": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "id",
+        "company_id",
+        "record_type",
+        "metadata",
+        "metric",
+        "value",
+        "unit",
+        "start",
+        "end"
+      ]
+    },
+    "custom_kpi": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "input_units": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "enum": [
+              "money",
+              "count",
+              "hours",
+              "ratio",
+              "number"
+            ]
+          }
+        },
+        "unit": {
+          "enum": [
+            "money",
+            "count",
+            "hours",
+            "ratio",
+            "number"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "formula",
+        "input_units",
+        "unit",
+        "description"
+      ]
     }
   }
 }

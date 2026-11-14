@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0 — 2026-11-14 — Complete local management release
+- Added eight department findings, six business KPI templates and safe custom formulas.
+- Added all operational entity schemas, relationship checks and period measurements.
+- Added five calendar report cadences, bounded cash scenarios, outcome evaluation
+  and optional immutable SQLite history.
+- Added a real optional GitHub issue adapter with exact scoped human approvals,
+  separate high-risk confirmation, expiry, durable audit and duplicate/concurrent
+  operation protection. Uncertain outcomes stop for reconciliation.
+- Added portable plugin packaging, checksums, private marketplace and Codex discovery.
+- Passed 149 installed-runtime tests, including extracted-plugin execution. Remote
+  release CI results are recorded in QA.md after the upload.
+- Retained private visibility and no open-source license. Live ChatGPT installation
+  and live business connector writes were not performed.
+
 ## 0.1.0 — 2026-11-14 — Phase 1 local preview
 - Added portable SoloOS skill with capability-aware instructions and no mandatory server.
 - Added validated company/transaction data, synthetic fixture and local onboarding.

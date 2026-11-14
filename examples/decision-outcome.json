@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "id": "outcome-3467b4fb85f36e29f0e99f98f742c208a894b0cd23abf64686153f35c5296e7a",
+  "record_type": "Outcome",
+  "company_id": "demo-solo",
+  "synthetic": true,
+  "metadata": {
+    "source": "soloos/1.0.0",
+    "recorded_at": "2026-11-14T10:12:26.530732+00:00",
+    "currency": "MYR",
+    "timezone": "Asia/Kuala_Lumpur",
+    "validation_status": "validated",
+    "evidence": "confirmed",
+    "provenance": [
+      "dataset:sha256:efaf0099a0e3687c055d528d130b755d2901e28a17fde73b8955c55b61b71ec7"
+    ]
+  },
+  "payload": {
+    "decision_id": "decision-649c0140bc65bd865c7cf1f70e626a352ad4d831d1b3e54e35a62667b0144aa7",
+    "company_id": "demo-solo",
+    "metric": "incremental_revenue",
+    "start": "2026-11-02",
+    "end": "2026-11-08",
+    "target": "1000",
+    "direction": "at_least",
+    "actual": "1200.00",
+    "assessment": "met",
+    "provenance": [
+      "decision:sha256:e5d4a7042277d81ba2f5caceefd2fedb029692cd8a881dd49189c2384ebd0201",
+      "dataset:sha256:efaf0099a0e3687c055d528d130b755d2901e28a17fde73b8955c55b61b71ec7"
+    ],
+    "caveat": "The user-selected evaluation criterion is not proof of a precommitted target or causal impact.",
+    "unit": "money",
+    "id": "outcome-600dcdd23a4fc1410c8bdd3a8767dbe59b6699c69361ad01db04d9a33628641f"
+  }
+}

@@ -3,40 +3,299 @@
   "title": "SoloOS Report and Decision output envelope",
   "$defs": {
     "metadata": {
-      "type": "object", "additionalProperties": false,
-      "required": ["source", "recorded_at", "currency", "timezone", "validation_status", "evidence", "provenance"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "recorded_at",
+        "currency",
+        "timezone",
+        "validation_status",
+        "evidence",
+        "provenance"
+      ],
       "properties": {
-        "source": {"type": "string", "minLength": 1},
-        "recorded_at": {"type": "string", "format": "date-time"},
-        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
-        "timezone": {"type": "string", "minLength": 1},
-        "validation_status": {"enum": ["validated", "unverified", "rejected"]},
-        "evidence": {"enum": ["confirmed", "assumption", "estimate", "forecast"]},
-        "provenance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorded_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validation_status": {
+          "enum": [
+            "validated",
+            "unverified",
+            "rejected"
+          ]
+        },
+        "evidence": {
+          "enum": [
+            "confirmed",
+            "assumption",
+            "estimate",
+            "forecast"
+          ]
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       }
     }
   },
-  "type": "object", "additionalProperties": false,
-  "required": ["schema_version", "id", "record_type", "company_id", "synthetic", "metadata", "payload"],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "record_type",
+    "company_id",
+    "synthetic",
+    "metadata",
+    "payload"
+  ],
   "properties": {
-    "schema_version": {"const": "0.1"},
-    "id": {"type": "string", "minLength": 1},
-    "record_type": {"enum": ["Report", "Decision"]},
-    "company_id": {"type": "string", "minLength": 1},
-    "synthetic": {"type": "boolean"},
-    "metadata": {"$ref": "#/$defs/metadata"},
-    "payload": {"type": "object"}
+    "schema_version": {
+      "enum": [
+        "0.1",
+        "1.0"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_type": {
+      "enum": [
+        "Report",
+        "Decision",
+        "Forecast",
+        "Outcome"
+      ]
+    },
+    "company_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "payload": {
+      "type": "object"
+    }
   },
   "allOf": [
-    {"if": {"properties": {"record_type": {"const": "Report"}}},
-     "then": {"properties": {"payload": {"required": ["cadence", "company_name", "kpis", "priorities"],
-       "properties": {"cadence": {"const": "weekly"}, "company_name": {"type": "string"},
-         "kpis": {"type": "object", "required": ["revenue", "expenses", "profit", "runway_months", "complete"]},
-         "priorities": {"type": "array", "items": {"type": "string"}}}}}}},
-    {"if": {"properties": {"record_type": {"const": "Decision"}}},
-     "then": {"properties": {"payload": {"required": ["status", "perspectives", "recommendation", "policy", "scenario"],
-       "properties": {"status": {"const": "proposed"}, "perspectives": {"type": "object", "required": ["CEO", "CFO", "CMO"]},
-         "recommendation": {"type": "string"}, "policy": {"type": "object", "properties": {"allowed": {"const": false}}, "required": ["allowed"]},
-         "scenario": {"type": "object"}}}}}}
+    {
+      "if": {
+        "properties": {
+          "record_type": {
+            "const": "Report"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "cadence",
+              "company_name",
+              "kpis",
+              "priorities"
+            ],
+            "properties": {
+              "cadence": {
+                "enum": [
+                  "daily",
+                  "weekly",
+                  "monthly",
+                  "quarterly",
+                  "annual"
+                ]
+              },
+              "company_name": {
+                "type": "string"
+              },
+              "kpis": {
+                "type": "object",
+                "required": [
+                  "revenue",
+                  "expenses",
+                  "profit",
+                  "runway_months",
+                  "complete"
+                ],
+                "properties": {
+                  "revenue": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]{0,14})(\\.[0-9]{1,6})?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "expenses": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]{0,14})(\\.[0-9]{1,6})?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "profit": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]{0,14})(\\.[0-9]{1,6})?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "runway_months": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]{0,14})(\\.[0-9]{1,6})?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "complete": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "priorities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "record_type": {
+            "const": "Decision"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "status",
+              "perspectives",
+              "recommendation",
+              "policy",
+              "scenario"
+            ],
+            "properties": {
+              "status": {
+                "const": "proposed"
+              },
+              "perspectives": {
+                "type": "object",
+                "required": [
+                  "CEO",
+                  "CFO",
+                  "CMO"
+                ]
+              },
+              "recommendation": {
+                "type": "string"
+              },
+              "policy": {
+                "type": "object",
+                "properties": {
+                  "allowed": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "allowed"
+                ]
+              },
+              "scenario": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "record_type": {
+            "const": "Forecast"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "baseline",
+              "assumptions",
+              "status",
+              "months"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "record_type": {
+            "const": "Outcome"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "decision_id",
+              "metric",
+              "target",
+              "actual",
+              "assessment"
+            ]
+          }
+        }
+      }
+    }
   ]
 }

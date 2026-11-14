@@ -1,5 +1,34 @@
 # SoloOS delivery plan
 
+## Current completion record
+Phases 2–5 were authorized by the user and implemented. The local skill, generated
+plugin, private marketplace and ZIP are ready. 149 installed-runtime tests pass;
+Codex recognizes the plugin as available. See ROADMAP.md and QA.md for delivered
+scope and external acceptance tests not performed. The remaining handoff step is
+the private GitHub update and release CI verification.
+
+Earlier Phase 1 stop instructions below are historical milestones, superseded by
+the user's authorization to complete the project.
+
+## Completion plan — authorized 2026-11-14
+1. Phase 2: eight department workflows, six usable business templates, custom KPI
+   definitions, and a shared operational record model. Acceptance: template arithmetic,
+   evidence gaps, routing and cross-department priorities have regression coverage.
+2. Phase 3: all five requested report cadences, bounded scenario forecasts, decision outcome
+   evaluation and optional SQLite persistence. Acceptance: calendar boundaries,
+   provenance, duplicate records, rollback and missing data are tested.
+3. Phase 4: optional real GitHub connector, scoped expiring approvals, durable audit
+   journal and duplicate/ambiguous-operation handling. Acceptance: default dry-run,
+   changed payloads, absent approval, missing capability and retries fail closed.
+   Do not exercise live business writes just to test the connector.
+4. Phase 5: current-format skill-only plugin package, portable archive and host
+   compatibility guidance. Acceptance: validate manifest/paths, execute unpacked
+   runtime, run all tests and GitHub CI, and record any unavailable live host checks.
+
+Use the skill-creator workflow for this substantial skill update. Preserve original
+Phase 1 behavior and data compatibility. Stage changes and verify before replacing
+protected installed files. Publish the completed source to the existing private repo.
+
 ## Phase 0 — conventions and workspace
 - Inspect existing work and governing instructions; preserve existing files.
 - Review official skill docs, Agent Skills specification and openai/skills.

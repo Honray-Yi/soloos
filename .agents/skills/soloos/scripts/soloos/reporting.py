@@ -2,6 +2,8 @@
 
 from .finance import calculate
 from .records import record
+from .periods import period
+from .management import department_review
 
 
 def weekly_report(data, start, end, recorded_at=None):
@@ -16,6 +18,16 @@ def weekly_report(data, start, end, recorded_at=None):
     return record("Report", data, payload, "estimate", recorded_at)
 
 
+def executive_report(data, cadence, anchor, recorded_at=None):
+    start, end = period(cadence, anchor)
+    review = department_review(data, start, end)
+    priorities = [item['action'] for item in review['priorities']] or ['Founder: review evidence gaps and select one measurable next action.']
+    payload = {'cadence': cadence, 'company_name': data['company']['name'],
+               'kpis': review['kpis']['financials'], 'priorities': priorities,
+               'business_metrics': review['kpis']['metrics'], 'department_review': review}
+    return record('Report', data, payload, 'estimate', recorded_at)
+
+
 def markdown(report):
     payload, meta = report["payload"], report["metadata"]
     k = payload["kpis"]
@@ -24,7 +36,7 @@ def markdown(report):
     # Escape user-supplied names so they cannot inject HTML or extra Markdown rows.
     import html
     name = html.escape(payload["company_name"]).replace("\n", " ").replace("\r", " ").replace("|", "\\|")
-    lines = [f"# SoloOS weekly executive report — {name}", "",
+    lines = [f"# SoloOS {payload['cadence']} executive report — {name}", "",
              f"Period: {k['start']} through {k['end']} (inclusive); timezone: {k['timezone']}.",
              f"Currency: {k['currency']}. Accounting basis: cash. Complete actuals: {k['complete']}.",
              f"Synthetic data: {report['synthetic']}. Generated: {meta['recorded_at']}.", "",
@@ -38,6 +50,10 @@ def markdown(report):
     if not k["complete"]:
         lines.append(f"- Partial observed totals (not full-period KPIs): {k['observed']}")
     lines += ["", "## Proposed priorities", ""] + ["- " + item for item in payload["priorities"]]
+    if payload.get('business_metrics'):
+        lines += ['', '## Business KPIs', '']
+        for key, item in payload['business_metrics'].items():
+            lines.append(f"- {key}: {item['value'] if item['value'] is not None else 'Unavailable'} ({item['unit']}); {item['status']}.")
     lines += ["", "No external action was executed.", "", f"Report ID: {report['id']}",
               f"Provenance: {meta['provenance'][0]}", ""]
     return "\n".join(lines)

@@ -1,6 +1,6 @@
 # Marketing budget decision
 
-Identify whether the increase is monthly recurring or one-time. The Phase 1 calculator
+Identify whether the increase is monthly recurring or one-time. The marketing calculator
 only accepts a positive recurring monthly increment. Do not silently reinterpret a
 one-time campaign budget. Use an explicit historical baseline and its evidence quality.
 
@@ -25,5 +25,6 @@ cap, success measure, stop rule and review date with the founder; no universal a
 runway, CAC or return threshold is imposed by the skill. Do not invent a profit forecast
 from the no-uplift scenario or call break-even revenue an expected outcome.
 
-Record the result as proposed. If execution is requested, explain the missing connector
-and return the exact proposed action for review. No Phase 1 command can execute it.
+Record the result as proposed. There is no advertising-account or payment connector;
+return the exact budget action for review. The optional GitHub connector can only
+create a separately approved issue, not change marketing spend.

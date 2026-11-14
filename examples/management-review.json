@@ -1,0 +1,383 @@
+{
+  "as_of": "2026-11-08",
+  "departments": {
+    "CEO": {
+      "mandate": "Strategy and capital allocation",
+      "coordinate_with": [
+        "CFO",
+        "COO"
+      ],
+      "decision_prompt": "Choose the next constraint to resolve; compare alternatives and founder capacity.",
+      "findings": {
+        "goal_progress": [
+          {
+            "id": "goal-delivery",
+            "metric": "project_margin",
+            "actual": "0.600000",
+            "target": "0.5",
+            "at_target": true,
+            "due_date": "2026-11-30",
+            "deadline_reached": false
+          }
+        ],
+        "active_projects": []
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    },
+    "CFO": {
+      "mandate": "Cash, profitability and funding",
+      "coordinate_with": [
+        "CEO",
+        "Sales"
+      ],
+      "decision_prompt": "Reconcile cash evidence, obligations and downside exposure before commitments.",
+      "findings": {
+        "cash_basis_financials": {
+          "start": "2026-11-02",
+          "end": "2026-11-08",
+          "days": 7,
+          "currency": "MYR",
+          "timezone": "Asia/Kuala_Lumpur",
+          "basis": "cash",
+          "complete": true,
+          "observed": {
+            "revenue": "2000.00",
+            "expenses": "2700.00",
+            "profit": "-700.00"
+          },
+          "revenue": "2000.00",
+          "expenses": "2700.00",
+          "profit": "-700.00",
+          "net_financing": "500.00",
+          "monthly_operating_burn": "3000.00",
+          "runway_months": "4.00",
+          "runway_status": "estimated_from_period",
+          "included_transaction_ids": [
+            "sale-1",
+            "cost-1",
+            "cost-2",
+            "capital-1"
+          ],
+          "excluded_transaction_ids": [],
+          "warnings": [
+            "Runway extrapolates this period to a 30-day month; financing, future obligations and seasonality are not projected."
+          ]
+        }
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    },
+    "CMO": {
+      "mandate": "Demand generation and attribution",
+      "coordinate_with": [
+        "Sales",
+        "CFO"
+      ],
+      "decision_prompt": "Test channel economics and attribution before scaling spend.",
+      "findings": {
+        "campaigns": [
+          {
+            "id": "campaign-demo",
+            "channel": "newsletter",
+            "status": "active",
+            "budget": "500.00"
+          }
+        ],
+        "observed_campaign_budget": "500.00"
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    },
+    "Sales": {
+      "mandate": "Pipeline and customer conversion",
+      "coordinate_with": [
+        "CMO",
+        "COO"
+      ],
+      "decision_prompt": "Identify the next qualified opportunity and confirm delivery capacity.",
+      "findings": {
+        "observed_pipeline_value": "5000.00",
+        "qualified_customer_ids": [
+          "customer-demo"
+        ]
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    },
+    "COO": {
+      "mandate": "Delivery and process reliability",
+      "coordinate_with": [
+        "Sales",
+        "CTO/Product"
+      ],
+      "decision_prompt": "Resolve blocked or overdue work and reduce repeatable delivery bottlenecks.",
+      "findings": {
+        "overdue_tasks": [
+          "task-review"
+        ],
+        "blocked_work": [
+          "project-launch"
+        ]
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    },
+    "CTO/Product": {
+      "mandate": "Product value and technical delivery",
+      "coordinate_with": [
+        "COO",
+        "CEO"
+      ],
+      "decision_prompt": "Prioritize customer evidence, reliability and smallest useful product increment.",
+      "findings": {
+        "products": [
+          {
+            "id": "product-audit",
+            "status": "active",
+            "unit_contribution": "1200.00"
+          }
+        ],
+        "blocked_projects": [
+          "project-launch"
+        ]
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    },
+    "HR/Partnership": {
+      "mandate": "Founder capacity and partner coordination",
+      "coordinate_with": [
+        "COO",
+        "CFO"
+      ],
+      "decision_prompt": "Compare build, buy and partner options; verify scope, cost and available hours.",
+      "findings": {
+        "utilization": {
+          "value": "0.600000",
+          "unit": "ratio",
+          "formula": "billable_hours/available_hours",
+          "description": "Delivered billable hours divided by available delivery hours.",
+          "status": "calculated",
+          "missing_inputs": [],
+          "provenance": [
+            "measure-billable_hours",
+            "measure-available_hours"
+          ]
+        },
+        "observed_task_owners": [
+          "founder"
+        ],
+        "partner_options": [
+          "defer work",
+          "reduce scope",
+          "evaluate a separately approved partner engagement"
+        ]
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    },
+    "BI": {
+      "mandate": "Evidence quality and measurement",
+      "coordinate_with": [
+        "CFO",
+        "CMO"
+      ],
+      "decision_prompt": "Reconcile provenance, coverage and definitions before interpreting performance.",
+      "findings": {
+        "financial_coverage_complete": true,
+        "unavailable_metrics": [],
+        "unverified_record_ids": []
+      },
+      "evidence_ids": [
+        "goal-delivery",
+        "project-launch",
+        "task-review",
+        "customer-demo",
+        "product-audit",
+        "campaign-demo"
+      ],
+      "limits": [
+        "Entity lists are snapshots, not historical event counts.",
+        "No inferred HR identity, contract authority or customer consent."
+      ]
+    }
+  },
+  "kpis": {
+    "financials": {
+      "start": "2026-11-02",
+      "end": "2026-11-08",
+      "days": 7,
+      "currency": "MYR",
+      "timezone": "Asia/Kuala_Lumpur",
+      "basis": "cash",
+      "complete": true,
+      "observed": {
+        "revenue": "2000.00",
+        "expenses": "2700.00",
+        "profit": "-700.00"
+      },
+      "revenue": "2000.00",
+      "expenses": "2700.00",
+      "profit": "-700.00",
+      "net_financing": "500.00",
+      "monthly_operating_burn": "3000.00",
+      "runway_months": "4.00",
+      "runway_status": "estimated_from_period",
+      "included_transaction_ids": [
+        "sale-1",
+        "cost-1",
+        "cost-2",
+        "capital-1"
+      ],
+      "excluded_transaction_ids": [],
+      "warnings": [
+        "Runway extrapolates this period to a 30-day month; financing, future obligations and seasonality are not projected."
+      ]
+    },
+    "business_type": "consulting",
+    "metrics": {
+      "project_margin": {
+        "value": "0.600000",
+        "unit": "ratio",
+        "formula": "(project_revenue-delivery_cost)/project_revenue",
+        "description": "Project contribution before unallocated overhead.",
+        "status": "calculated",
+        "missing_inputs": [],
+        "provenance": [
+          "measure-project_revenue",
+          "measure-delivery_cost"
+        ]
+      },
+      "utilization": {
+        "value": "0.600000",
+        "unit": "ratio",
+        "formula": "billable_hours/available_hours",
+        "description": "Delivered billable hours divided by available delivery hours.",
+        "status": "calculated",
+        "missing_inputs": [],
+        "provenance": [
+          "measure-billable_hours",
+          "measure-available_hours"
+        ]
+      },
+      "cash_margin": {
+        "value": "-0.350000",
+        "unit": "ratio",
+        "formula": "profit/revenue",
+        "description": "Cash-basis profit margin",
+        "status": "calculated",
+        "missing_inputs": [],
+        "provenance": [
+          "cash-ledger",
+          "cash-ledger"
+        ]
+      }
+    }
+  },
+  "overdue_task_ids": [
+    "task-review"
+  ],
+  "blocked_record_ids": [
+    "project-launch"
+  ],
+  "pipeline_ids": [
+    "customer-demo"
+  ],
+  "priorities": [
+    {
+      "departments": [
+        "COO",
+        "CTO/Product",
+        "Sales"
+      ],
+      "reason": "Blocked or overdue delivery work",
+      "action": "Resolve delivery constraints before promising additional capacity.",
+      "record_ids": [
+        "project-launch",
+        "task-review"
+      ]
+    },
+    {
+      "departments": [
+        "Sales",
+        "COO",
+        "HR/Partnership"
+      ],
+      "reason": "Pipeline demand overlaps delivery constraints",
+      "action": "Evaluate timing or a scoped partner engagement before closing new work."
+    }
+  ],
+  "unverified_entity_ids": [],
+  "execution": "proposal_only"
+}

@@ -4,89 +4,112 @@
 
 **One Founder. One Company. One Intelligent Operating System.**
 
-Phase 1 local preview: turn validated business records into cash-basis KPIs, a weekly
-executive report and a CEO/CFO/CMO marketing budget proposal. No paid API or backend.
-This is a working vertical slice, not the complete eight-department product.
+SoloOS 1.0 is a local-first management skill for solo founders. It combines validated
+business data, deterministic calculations, management reporting and explicitly
+authorized operations. No mandatory paid API, server or hosted database.
 
-## Use as a Codex skill
-Clone this private repository using your authenticated GitHub account, open Codex in
-the repository, and invoke `$soloos`. The skill is discovered from
-`.agents/skills/soloos/SKILL.md`. Install the Python dependencies below before asking
-it to run calculations. See [deployment and ChatGPT compatibility](DEPLOYMENT.md)
-for copying the skill into another project and the limits of other host environments.
+## What works
+- Eight department reviews: CEO, CFO, CMO, Sales, COO, CTO/Product, HR/Partnership, BI.
+- Six KPI templates: SaaS, e-commerce, creator, freelance, consulting, digital products;
+  custom businesses can define safe arithmetic metrics.
+- Company onboarding and a unified model for Company, Goal, Project, Task,
+  Transaction, Customer, Product, Campaign, Decision and Report.
+- Cash-basis revenue, expenses, profit and conditional runway; confirmed facts remain
+  distinct from assumptions, estimates and forecasts.
+- Daily, weekly, monthly, quarterly and annual reports; explicit cash scenarios.
+- Immutable JSON/SQLite snapshots, decision logs and outcome evaluation.
+- Proposal-first GitHub issue creation with separate scoped approvals, expiry,
+  duplicate suppression and a durable execution journal.
 
-Example request:
+Other business writes (payments, contracts, deletion, advertising changes and binding
+communications) are not implemented connectors and remain proposals. No scheduler
+or autonomous self-modification is included.
 
-> Use $soloos to review my weekly business data, identify evidence gaps, and assess
-> a proposed monthly marketing increase. Produce a proposal without executing changes.
+## Start with the skill
+Clone this private repository using your authenticated GitHub account. Open Codex in
+the repository and invoke `$soloos`. Install Python dependencies before asking it to
+run calculations. The portable runtime is [.agents/skills/soloos](.agents/skills/soloos).
+Copy that entire folder into another project's `.agents/skills/` for repo-scoped use.
 
-## Repository layout
-```text
-.agents/skills/soloos/   Portable skill: instructions, metadata, scripts, schemas, fixture
-.github/                Automated CI and issue/pull-request templates
-examples/               Generated fictional report and decision
-tests/                  Deterministic, regression and negative tests
-tools/                  Development helpers; not needed by the installed skill
-```
-
-## Implemented and planned
-| Capability | Status |
-| --- | --- |
-| Company onboarding and JSON validation | Implemented and locally tested |
-| Cash-basis KPIs and weekly reports | Implemented and locally tested |
-| CEO/CFO/CMO marketing budget review | Implemented and locally tested |
-| External writes | Disabled in Phase 1 |
-| Eight departments and six templates | Planned, not implemented |
-| Plugin distribution and live ChatGPT acceptance | Planned, not verified |
+Example:
+> Use $soloos to review this week's business data, identify the strongest constraint,
+> and assess a marketing budget increase. Show evidence gaps and propose next actions.
 
 ## Quick start
-Requires Python 3.11+. From the repository root, on Windows PowerShell:
+Requires Python 3.11+. From the repository root on Windows PowerShell:
 
 ```powershell
 py -3.11 -m venv .venv
 & .\.venv\Scripts\python.exe -m pip install -r .agents/skills/soloos/scripts/requirements.txt
 & .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py init --demo --out work/demo.json
 & .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py validate work/demo.json
-& .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py kpis work/demo.json --start 2026-11-02 --end 2026-11-08
-& .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py weekly-report work/demo.json --start 2026-11-02 --end 2026-11-08 --out work/weekly.md
-& .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py marketing-budget work/demo.json --start 2026-11-02 --end 2026-11-08 --monthly-increase 600.00 --contribution-margin 0.60 --out work/decision.json
+& .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py report examples/management-business.json --cadence weekly --anchor 2026-11-04 --out work/report.md
+& .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py review examples/management-business.json --start 2026-11-02 --end 2026-11-08 --out work/review.json
+& .\.venv\Scripts\python.exe .agents/skills/soloos/scripts/soloos_cli.py forecast examples/management-business.json --start 2026-11-02 --end 2026-11-08 --months 3
 ```
 
-Use your installed 3.11+ interpreter instead of `py -3.11` if needed. On macOS/Linux,
-create the environment with `python3 -m venv .venv` and use `.venv/bin/python` for each
-command. Paths under the skill stay identical. Output paths must be new; existing
-files are never overwritten. JSON reports are available with `--format json`.
+Use your installed 3.11+ interpreter if different. On macOS/Linux use
+`python3 -m venv .venv`, then `.venv/bin/python`. Existing output files are never
+overwritten. `--help` documents every command; `--format json` exports report records.
 
-Expected demo: MYR 2,000 revenue, 2,700 expenses, -700 cash-basis profit, 4.00 months
-estimated runway. A MYR 600 recurring monthly marketing increase gives 3.33 months
-downside runway and requires MYR 1,000 extra monthly revenue at an **assumed** 60%
-contribution margin. This is fictional scenario arithmetic, not business advice
-derived from a real company or a prediction of campaign performance.
+The fictional demo has MYR 2,000 revenue, 2,700 expenses, -700 cash-basis profit,
+and 4.00 months estimated runway. The extended consulting fixture has a 60% project
+contribution margin and 60% utilization. These are synthetic examples, not benchmarks.
 
-## Tests
-```powershell
-& .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-& .\.venv\Scripts\python.exe -m pytest
+## Plugin distribution
+The same runtime is packaged under [plugins/soloos](plugins/soloos), with a current
+Agent Plugins manifest and a private repo marketplace. It includes no server or
+credential. See [DEPLOYMENT.md](DEPLOYMENT.md) for host-specific installation.
+
+```text
+python tools/build_plugin.py --output work/new-plugin --archive dist/soloos-plugin.zip
 ```
 
-The portable skill is [.agents/skills/soloos/SKILL.md](.agents/skills/soloos/SKILL.md).
-See [PRD](PRD.md), [architecture](ARCHITECTURE.md), [deployment](DEPLOYMENT.md),
-[roadmap](ROADMAP.md) and [QA](QA.md) for scope, evidence and limitations.
+The builder requires fresh output paths and writes SHA-256 checksums. The committed
+distribution is checked against the canonical runtime to prevent drift. Do not edit
+generated copies independently. Choose the standalone skill or installed plugin
+for a project to avoid duplicate skill entries.
 
-External writes are unavailable in Phase 1, even with approval. Live ChatGPT installation,
-plugin publishing, SQLite, other report cadences and six business templates are planned.
-Development stops for user approval before Phase 2. No autonomous self-modification.
+## Execution requires human review
+All normal analysis is read-only; requested local exports and storage are explicit.
+GitHub writes need a token supplied outside the repository, an exact action proposal,
+two human approval steps, unexpired scoped approvals and `--execute`. Dry-run is the
+default. Read [the operations guide](.agents/skills/soloos/references/operations.md)
+before using it. A network timeout blocks automatic retry and requires reconciliation.
+The local journal is not a tamper-proof identity service or an exactly-once guarantee
+from GitHub. No live business write was performed merely to test this release.
 
-Verified locally: **90 tests passed**, valid skill metadata, and standalone copied-skill
-execution. Inspect the generated [weekly report](examples/weekly-report.md) and
-[marketing proposal](examples/marketing-decision.json). All six GitHub Actions jobs
-passed on Windows/Linux with Python 3.11–3.13 for the initial Phase 1 upload.
-See [the verified run](https://github.com/Honray-Yi/soloos/actions/runs/43577214920)
-and QA.md for verification details. Live ChatGPT acceptance remains untested.
+## Tests and examples
+```text
+python -m pip install -r requirements-dev.txt
+python -m pytest
+```
 
-## Contributions, security and licensing
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a change and
-[SECURITY.md](SECURITY.md) before reporting security issues. Use only synthetic or
-redacted data in issues and tests. This repository is private and has **no open-source
-license**; no permission to redistribute or sublicense is granted by this README.
-The owner may choose a license later. Dependencies retain their respective licenses.
+Use your virtual environment's Python. Tests cover business arithmetic, schema and
+relationship validation, missing evidence, report periods, storage, approvals, duplicate
+and concurrent operations, HTTP contracts, and extracted-package execution.
+
+- [Executive report](examples/executive-report-v1.md)
+- [Eight-department review](examples/management-review.json)
+- [Cash scenario](examples/cash-forecast.json)
+- [Decision outcome](examples/decision-outcome.json)
+- [QA evidence and compatibility limits](QA.md)
+
+## Repository structure
+```text
+.agents/skills/soloos/   Canonical standalone runtime
+.agents/plugins/        Local marketplace catalog
+plugins/soloos/         Generated portable plugin
+packaging/              Manifest, catalog and official schema sources
+tests/                  Deterministic, regression and negative tests
+examples/               Fictional datasets and generated results
+tools/                  Development and packaging helpers
+```
+
+See [PRD](PRD.md), [architecture](ARCHITECTURE.md), [roadmap](ROADMAP.md),
+[contributing](CONTRIBUTING.md), [security](SECURITY.md) and [changelog](CHANGELOG.md).
+
+This repository remains **private with no open-source license**. No redistribution
+or sublicensing permission is granted by this README. Dependencies and the attributed
+plugin specification retain their own terms. Live ChatGPT installation and production
+connector acceptance are not implied by local tests or Codex discovery.

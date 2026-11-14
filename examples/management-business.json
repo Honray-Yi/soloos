@@ -1,0 +1,372 @@
+{
+  "schema_version": "1.0",
+  "company": {
+    "id": "demo-solo",
+    "name": "Lumen Studio (fictional)",
+    "business_type": "consulting",
+    "minor_units": 2,
+    "synthetic": true,
+    "metadata": {
+      "source": "SoloOS synthetic fixture",
+      "recorded_at": "2026-11-09T00:00:00+08:00",
+      "currency": "MYR",
+      "timezone": "Asia/Kuala_Lumpur",
+      "validation_status": "validated",
+      "evidence": "confirmed",
+      "provenance": [
+        "Fictional values for automated tests; not real business evidence"
+      ]
+    }
+  },
+  "coverage": {
+    "start": "2026-11-02",
+    "end": "2026-11-08",
+    "complete": true,
+    "metadata": {
+      "source": "SoloOS synthetic fixture",
+      "recorded_at": "2026-11-09T00:00:00+08:00",
+      "currency": "MYR",
+      "timezone": "Asia/Kuala_Lumpur",
+      "validation_status": "validated",
+      "evidence": "confirmed",
+      "provenance": [
+        "Fictional values for automated tests; not real business evidence"
+      ]
+    }
+  },
+  "cash_snapshot": {
+    "as_of": "2026-11-08",
+    "available_cash": "12000.00",
+    "metadata": {
+      "source": "SoloOS synthetic fixture",
+      "recorded_at": "2026-11-09T00:00:00+08:00",
+      "currency": "MYR",
+      "timezone": "Asia/Kuala_Lumpur",
+      "validation_status": "validated",
+      "evidence": "confirmed",
+      "provenance": [
+        "Fictional values for automated tests; not real business evidence"
+      ]
+    }
+  },
+  "transactions": [
+    {
+      "id": "sale-1",
+      "company_id": "demo-solo",
+      "occurred_at": "2026-11-04T12:00:00+08:00",
+      "kind": "revenue",
+      "amount": "2000.00",
+      "category": "consulting",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      }
+    },
+    {
+      "id": "cost-1",
+      "company_id": "demo-solo",
+      "occurred_at": "2026-11-04T12:00:00+08:00",
+      "kind": "expense",
+      "amount": "2200.00",
+      "category": "delivery",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      }
+    },
+    {
+      "id": "cost-2",
+      "company_id": "demo-solo",
+      "occurred_at": "2026-11-04T12:00:00+08:00",
+      "kind": "expense",
+      "amount": "500.00",
+      "category": "marketing",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      }
+    },
+    {
+      "id": "capital-1",
+      "company_id": "demo-solo",
+      "occurred_at": "2026-11-04T12:00:00+08:00",
+      "kind": "financing_in",
+      "amount": "500.00",
+      "category": "owner_contribution",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      }
+    }
+  ],
+  "entities": [
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "goal-delivery",
+      "record_type": "Goal",
+      "name": "Improve project margin",
+      "metric": "project_margin",
+      "target": "0.5",
+      "direction": "at_least",
+      "due_date": "2026-11-30"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "project-launch",
+      "record_type": "Project",
+      "name": "Client launch",
+      "goal_id": "goal-delivery",
+      "status": "blocked"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "task-review",
+      "record_type": "Task",
+      "name": "Confirm delivery scope",
+      "project_id": "project-launch",
+      "owner": "founder",
+      "status": "todo",
+      "due_date": "2026-11-06"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "customer-demo",
+      "record_type": "Customer",
+      "name": "Fictional prospective customer",
+      "stage": "qualified",
+      "value": "5000.00"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "product-audit",
+      "record_type": "Product",
+      "name": "Strategy audit",
+      "price": "2000.00",
+      "unit_cost": "800.00",
+      "status": "active"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "campaign-demo",
+      "record_type": "Campaign",
+      "name": "Fictional acquisition test",
+      "product_id": "product-audit",
+      "channel": "newsletter",
+      "budget": "500.00",
+      "status": "active"
+    }
+  ],
+  "measurements": [
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "measure-project_revenue",
+      "record_type": "Measurement",
+      "metric": "project_revenue",
+      "value": "2000.00",
+      "unit": "money",
+      "start": "2026-11-02",
+      "end": "2026-11-08"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "measure-delivery_cost",
+      "record_type": "Measurement",
+      "metric": "delivery_cost",
+      "value": "800.00",
+      "unit": "money",
+      "start": "2026-11-02",
+      "end": "2026-11-08"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "measure-billable_hours",
+      "record_type": "Measurement",
+      "metric": "billable_hours",
+      "value": "24",
+      "unit": "hours",
+      "start": "2026-11-02",
+      "end": "2026-11-08"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "measure-available_hours",
+      "record_type": "Measurement",
+      "metric": "available_hours",
+      "value": "40",
+      "unit": "hours",
+      "start": "2026-11-02",
+      "end": "2026-11-08"
+    },
+    {
+      "company_id": "demo-solo",
+      "metadata": {
+        "source": "SoloOS synthetic fixture",
+        "recorded_at": "2026-11-09T00:00:00+08:00",
+        "currency": "MYR",
+        "timezone": "Asia/Kuala_Lumpur",
+        "validation_status": "validated",
+        "evidence": "confirmed",
+        "provenance": [
+          "Fictional values for automated tests; not real business evidence"
+        ]
+      },
+      "id": "measure-incremental_revenue",
+      "record_type": "Measurement",
+      "metric": "incremental_revenue",
+      "value": "1200.00",
+      "unit": "money",
+      "start": "2026-11-02",
+      "end": "2026-11-08"
+    }
+  ],
+  "custom_kpis": [
+    {
+      "name": "cash_margin",
+      "formula": "profit/revenue",
+      "input_units": {
+        "profit": "money",
+        "revenue": "money"
+      },
+      "unit": "ratio",
+      "description": "Cash-basis profit margin"
+    }
+  ]
+}

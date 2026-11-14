@@ -1,8 +1,12 @@
-"""SoloOS CLI: explicit local commands, stdout by default, no network access."""
+"""SoloOS CLI: local by default, external writes behind scoped explicit opt-in."""
 
 import argparse
 import json
 import sys
+import sqlite3
+from jsonschema.exceptions import ValidationError
+from . import commands
+from . import action_commands
 
 from .data import load, save_new
 from .decisions import marketing_budget
@@ -13,8 +17,10 @@ from .routing import route
 
 
 def parser():
-    root = argparse.ArgumentParser(description="SoloOS Phase 1 — local analysis and proposals")
+    root = argparse.ArgumentParser(description="SoloOS — local business intelligence and authorized operations")
     subs = root.add_subparsers(dest="command", required=True)
+    commands.register(subs)
+    action_commands.register(subs)
     subs.add_parser("capabilities", help="Describe CLI capabilities, not host or connector permissions")
     routing = subs.add_parser("route", help="Route an explicit intent label")
     routing.add_argument("intent")
@@ -47,10 +53,15 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
-        if args.command == "capabilities":
+        if args.command in action_commands.COMMANDS:
+            result = action_commands.dispatch(args)
+        elif args.command in commands.COMMANDS:
+            result = commands.dispatch(args)
+        elif args.command == "capabilities":
             result = {"python": sys.version.split()[0], "local_json": True,
                       "weekly_reporting": True, "external_execution": False,
-                      "connectors": [], "scheduler": False, "sqlite_adapter": False,
+                      "connectors": ["github.create_issue (optional; scoped approvals and credentials required)"], "scheduler": False, "sqlite_adapter": True,
+                      "report_cadences": list(commands.CADENCES), "business_templates": list(commands.TEMPLATES),
                       "host_capabilities": "not inspected"}
         elif args.command == "route":
             result = route(args.intent)
@@ -83,6 +94,6 @@ def main(argv=None):
         else:
             print(output, end="" if output.endswith("\n") else "\n")
         return 0
-    except (ValueError, OSError) as exc:
+    except (ValueError, OSError, sqlite3.Error, ValidationError, RuntimeError) as exc:
         print(f"SoloOS error: {exc}", file=sys.stderr)
         return 2

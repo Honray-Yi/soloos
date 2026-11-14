@@ -1,3 +1,3 @@
-"""SoloOS Phase 1: deterministic, local, proposal-only management runtime."""
+"""SoloOS: deterministic local management with optional authorized operations."""
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
